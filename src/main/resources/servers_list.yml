@@ -1,0 +1,7 @@
+servers:
+  - name: local
+    ip: 127.0.0.1
+    port: 8080
+  - name: real
+    ip: xxx.xxx.xxx.xxx
+    port: 80
