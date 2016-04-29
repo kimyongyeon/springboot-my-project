@@ -7,11 +7,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 public class MainController {
@@ -34,8 +37,8 @@ public class MainController {
     }
 
     @RequestMapping(value = "/login", method = {RequestMethod.POST, RequestMethod.GET})
-    public String login(Model model) {
-        logger.info("login(/login) 화면 입니다.");
+    public String login(Model model, HttpServletRequest req) {
+        logger.info("login(/login) 화면 입니다. {} ", req.getQueryString());
         model.addAttribute("name", "환영 합니다.");
         return "login";
     }
@@ -50,6 +53,7 @@ public class MainController {
     public String loginAction(Model model
             , HttpServletResponse res
             , HttpServletRequest req
+            ,RedirectAttributes redirectAttributes
             , @RequestParam("userid") String userid
             , @RequestParam("userpw") String userpw) throws IOException {
 
@@ -60,7 +64,12 @@ public class MainController {
         logger.info("userpw : {} ", userpw.length());
 
         if(userid.length() == 0 || userpw.length() == 0) {
-            res.sendRedirect("/login");
+            Map map = new HashMap<>();
+            map.put("key1", "value1");
+            map.put("key2", "value2");
+            redirectAttributes.addFlashAttribute("vo", map);
+//            res.sendRedirect("/login");
+            return "redirect:/login";
         }
         return "/hello";
     }
