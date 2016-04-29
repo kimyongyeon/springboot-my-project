@@ -14,7 +14,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 //@ConfigurationProperties(locations = {"classpath:servers.yml", "classpath:servers_list.yml"})
 @Configuration
 @EnableWebMvc
-public class ServerHolder extends WebMvcConfigurerAdapter{
+public class AppConfig extends WebMvcConfigurerAdapter{
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {

@@ -32,6 +32,12 @@ public class SpringbootDemoApplication extends SpringBootServletInitializer{
 
 	private static final Logger log = LoggerFactory.getLogger(SpringbootDemoApplication.class);
 
+	public static void main(String[] args) {
+		log.info("springBoot 한글 테스트 중입니다.");
+		SpringApplication.run(SpringbootDemoApplication.class, args);
+	}
+
+	// tomcat 설정
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
 		return builder.sources(SpringbootDemoApplication.class);
@@ -62,19 +68,13 @@ public class SpringbootDemoApplication extends SpringBootServletInitializer{
 		return  templateResolver;
 	}
 
-//	@Bean
-//	public SpringTemplateEngine templateEngine(){
-//		SpringTemplateEngine templateEngine = new SpringTemplateEngine();
-//		templateEngine.setTemplateResolver(new TemplateResolver());
-//		templateEngine.addDialect(new LayoutDialect());
-//		return templateEngine;
-//	}
-
+	// 한글 입력
 	@Bean
 	public HttpMessageConverter<String> responseBodyConverter() {
 		return new StringHttpMessageConverter(Charset.forName("UTF-8"));
 	}
 
+	// 한글 입력
 	@Bean
 	public Filter characterEncodingFilter() {
 		CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
@@ -83,6 +83,7 @@ public class SpringbootDemoApplication extends SpringBootServletInitializer{
 		return characterEncodingFilter;
 	}
 
+	// h2 설정
 	@Bean
 	ServletRegistrationBean h2servletRegistration() {
 		ServletRegistrationBean registrationBean = new ServletRegistrationBean(new WebServlet());
@@ -90,11 +91,7 @@ public class SpringbootDemoApplication extends SpringBootServletInitializer{
 		return registrationBean;
 	}
 
-	public static void main(String[] args) {
-		log.info("springBoot 한글 테스트 중입니다.");
-		SpringApplication.run(SpringbootDemoApplication.class, args);
-	}
-
+	// jpa 테스트
 	@Bean
 	public CommandLineRunner demo(CustomerRepository repository) {
 		return (args) -> {
